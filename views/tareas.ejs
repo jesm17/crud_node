@@ -1,76 +1,114 @@
-<%- include('includes/head'); %>
-<%- include('includes/nav'); %>
-
-<div>
-  <div>
-    <div class="container p-2">
-      <div class="d-flex justify-content-center">
-        <form style="width: 35%;" class="border border-1 border-dark" action="/update/" method="post">
-          <div class="container p-1" id="detail">
-            <div class="d-flex justify-content-center">
-              <img src="/images/person-circle.svg" alt="" srcset="" style="height: 30%; width: 30%;">
-            </div>
+<%- include('includes/head'); %> <%- include('includes/nav'); %>
+<div class="d-flex justify-content-center p-2 m-2">
+    <form action="/update/" method="post" class="form-control" style="width: 60%">
+        <div>
             <div>
-              <div>
-                <label for="id" class="form-label ">Id:</label>
-                <input type="text" class="form-control" name="id" value="<%=usuario[0].id %>" readonly>
-              </div>
-              <div>
-                <label for="nombre" class="form-label ">Nombre:</label>
-                <input type="text" class="form-control" name="nombre" value="<%=usuario[0].nombre %>">
-              </div>
-              <div>
-                <label for="telefono" class="form-label">Telefono:</label>
-                <input type="tel" class="form-control" name="telefono" value="<%=usuario[0].telefono %>">
-              </div>
-              <div>
-                <label for="email" class="form-label">Correo:</label>
-                <input type="email" class="form-control" name="correo" value="<%=usuario[0].correo %>">
-              </div>
-              <div class="d-flex justify-content-center p-3 m-2">
-                
-                <button type="submit" class="btn btn-success">Actualizar</button>
-              </div>
+                <div class="d-flex justify-content-center">
+                    <img src="/images/person-circle.svg" alt="" style="width: 20%"/>
+                </div>
+                <div class="container p-2 d-flex justify-content-center">
+                    <div class="" style="width: 45%">
+                        <div>
+                            <div>
+                                <label for="id" class="form-label">Id: </label>
+                                <input
+                                        type="text"
+                                        name="id"
+                                        id="id"
+                                        class="form-control"
+                                        value="<%= usuario[0].id %>"
+                                />
+                            </div>
+                            <div>
+                                <label for="nombre" class="form-label"> Nombre: </label>
+                                <input
+                                        type="text"
+                                        id="nombre"
+                                        name="nombre"
+                                        class="form-control"
+                                        value="<%= usuario[0].nombre %>"
+                                />
+                            </div>
+                            <div>
+                                <label for="correo">Email:</label>
+                                <input
+                                        class="form-control"
+                                        type="email"
+                                        name="correo"
+                                        id="correo"
+                                        value="<%= usuario[0].correo %>"
+                                />
+                            </div>
+                            <div>
+                                <label for="telefono" class="form-label">Telefono: </label>
+                                <input
+                                        class="form-control"
+                                        type="tel"
+                                        name="telefono"
+                                        id="telefono"
+                                        value="<%= usuario[0].telefono %>"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
             </div>
-          </div>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <div class="d-flex justify">
+        <form action="/tarea/update" method="post">
+            <% tareas.forEach(function(tareas) { %>
+                <div class="d-flex align-items-start">
+                    <div>
+                        <div class="container d-flex align-items-start">
+                            <div class="card m-2">
+                                <div class="card-header">
+                                    <label for="descripcion_tarea" class="form-label">Descripcion Tarea: </label>
+                                    <input
+                                            class="form-control"
+                                            type="text"
+                                            name="descripcion_tarea"
+                                            id="descripcion_tarea"
+                                            value="<%= tareas.descripcion_tarea %>"
+                                    />
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <label for="nombre_categoria" class="form-label">Categoria </label>
+                                        <input style="background-color: <%= tareas.color %>;" type="text"
+                                               name="nombre_categoria" id="nombre_categoria" class="form-control"
+                                               value="<%= tareas.nombre_categoria %>" readonly>
+                                    </div>
+                                    <div>
+                                        <label for="estado" class="form-label">Estado actual: </label>
+                                        <input id="estado" name="estado" class="form-control"
+                                               value="<%= tareas.descripcion_estado %>" disabled>
+                                    </div>
+                                    <div>
+                                        <label for="id_estado_t"> Estado tarea :</label>
+                                        <select name="id_estado_t" id="id_estado_t">
+                                            <% estados.forEach(function(estados) { %>
+                                                <option value="<%= estados.id_estado %>"><%= estados.descripcion_estado %> </option>
+                                            <% }) %>
+
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-center p-4 m-2">
+
+                                        <button class="btn btn-success">Actualizar tarea</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
         </form>
-      </div>
     </div>
-  </div>
-  <div class="p-4">
-    <center>
-      <h2>Tareas</h2>
-    </center>
-  </div>
-  <div class="container d-flex p-1 m-2">
-
-    <% usuario.forEach(function(usuario) { %>
-
-    <div class="card m-2" style="width: 18rem; ">
-      <div class="card-body">
-        <h5 class="card-title">
-          <%=usuario.descripcion %>
-        </h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Fecha inicio: <%=usuario.fecha_inicio %>
-          </li>
-          <li class="list-group-item">Fecha fin: <%=usuario.fecha_fin %>
-          </li>
-          <!-- <li class="list-group-item border border-2 border-dark" style="background-color:<%=usuario.color %>;color: #fffffe;">Categoria: <%=usuario.nombre_categoria %></li>  -->
-          </li>
-          <li class="list-group-item">Estado: <%=usuario.descripcion_estado %>
-          </ul>
-          <div>
-            <select name="" id="">
-              <option value=" <%=usuario.id_estado_t %>" selected><%= usuario.descripcion_estado %></option>
-              <% estados.forEach(function (estados){ %> 
-                <option value="<%= estados.id %> " ><%= estados.descripcion_estado %></option>
-                <% }) %> 
-            </select>
-          </div>
-      </div>
-    </div>
-    <br>
-    <% }); %>
-  </div>
 </div>

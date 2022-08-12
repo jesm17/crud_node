@@ -1,0 +1,70 @@
+<%- include ('../includes/head.ejs') %> <%-include ('../includes/nav.ejs') %>
+<h1 class="title p-2 m-2">Categorias</h1>
+<div class="p-2 m-2">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Agregar categoria <i class="bi bi-folder-plus"></i>
+    </button>
+</div>
+<div>
+  <div class="container p-2 m-2">
+    <div class="d-flex align-items-start">
+      <form action="" class="form-control d-flex align-items-start">
+        <% categorias.forEach(function(categorias) { %>
+
+        <div class="card p-2 m-2" style="width: 35%;">
+          <div class="card-body">
+            <div>
+              <label for="nombre_categoria" class="form-label"
+                >Nombre de la categoria:
+              </label>
+              <input
+                id="nombre_categoria"
+                name="nombre_categoria"
+                type="text"
+                class="form-control"
+                value="<%= categorias.nombre_categoria %>"
+              />
+            </div>
+            <div>
+              <label for="color" class="form-label">Color: </label>
+              <input
+                type="color"
+                id="color"
+                name="color"
+                class="form-control"
+                value="<%= categorias.color %>"
+              />
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-success">
+              Guardar <i class="bi bi-save"></i>
+            </button>
+          </div>
+        </div>
+        <% }); %>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>

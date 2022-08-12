@@ -10,8 +10,8 @@ const conection=mysql.createConnection({
 conection.connect((err)=>{
     if(err){
         console.log(err);
-    }
-    console.log('Conexion exitosa');
+    }else{
+    console.log('connect whit exist to db');}
 });
 
 export default conection
