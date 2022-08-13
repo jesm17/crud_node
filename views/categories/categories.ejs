@@ -1,70 +1,136 @@
-<%- include ('../includes/head.ejs') %> <%-include ('../includes/nav.ejs') %>
+<%- include ('../includes/head.ejs') %> <%- include ('../includes/nav.ejs') %>
 <h1 class="title p-2 m-2">Categorias</h1>
 <div class="p-2 m-2">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#addCategory"
+    >
         Agregar categoria <i class="bi bi-folder-plus"></i>
     </button>
 </div>
-<div>
-  <div class="container p-2 m-2">
-    <div class="d-flex align-items-start">
-      <form action="" class="form-control d-flex align-items-start">
-        <% categorias.forEach(function(categorias) { %>
+<div class="d-flex flex-row mb-3">
+    <div class="justify-content-start">
 
-        <div class="card p-2 m-2" style="width: 35%;">
-          <div class="card-body">
-            <div>
-              <label for="nombre_categoria" class="form-label"
-                >Nombre de la categoria:
-              </label>
-              <input
-                id="nombre_categoria"
-                name="nombre_categoria"
-                type="text"
-                class="form-control"
-                value="<%= categorias.nombre_categoria %>"
-              />
+        <div class="container-fluid " >
+            <div class="d-flex align-items-start row-2">
+
+            <% categorias.forEach(function(categorias) { %>
+                <form
+                        action="/categories/update/"
+                        method="post"
+                        class="form-control p-2"
+                >
+                    <div class="card p-2 ">
+                        <div class="card-header">
+                            <label for="id" class="form-label">ID: </label>
+                            <input
+                                    type="text"
+                                    name="id"
+                                    id="id"
+                                    value="<%= categorias.id_categoria %>"
+                                    readonly
+                            />
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <label for="nombre_categoria" class="form-label"
+                                >Nombre de la categoria:
+                                </label>
+                                <input
+                                        id="nombre_categoria"
+                                        name="nombre_categoria"
+                                        type="text"
+                                        class="form-control"
+                                        value="<%= categorias.nombre_categoria %>"
+                                />
+                            </div>
+                            <div>
+                                <label for="color" class="form-label">Color: </label>
+                                <input
+                                        type="color"
+                                        id="color"
+                                        name="color"
+                                        class="form-control"
+                                        value="<%= categorias.color %>"
+                                />
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success" type="submit">
+                                Guardar <i class="bi bi-save"></i>
+                            </button>
+                            <a href="/delete/categorie/<%=categorias.id_categoria%>" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </form>
+            <% }); %>
             </div>
-            <div>
-              <label for="color" class="form-label">Color: </label>
-              <input
-                type="color"
-                id="color"
-                name="color"
-                class="form-control"
-                value="<%= categorias.color %>"
-              />
-            </div>
-          </div>
-          <div class="card-footer">
-            <button class="btn btn-success">
-              Guardar <i class="bi bi-save"></i>
-            </button>
-          </div>
         </div>
-        <% }); %>
-      </form>
     </div>
-  </div>
 </div>
-<!-- Button trigger modal -->
 
-  
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+<!-- Modal -->
+<div
+        class="modal fade"
+        id="addCategory"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+>
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Agregar categoria</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <form action="/create/categorie" method="post">
+                    <div>
+                        <div>
+                            <label for="nombre_categoria" class="form-label"
+                            >Nombre de la categoria:</label
+                            >
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    name="nombre_categoria"
+                                    id="nombre_categoria"
+                                    placeholder="Nombre de la categoria"
+                                    value=""
+                            />
+                        </div>
+                        <div>
+                            <label for="color" class="form-label">Color: </label>
+                            <input
+                                    type="color"
+                                    class="form-control"
+                                    name="color"
+                                    id="color"
+                                    placeholder="Color"
+                                    value=""
+                            />
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Cancelar <i class="bi bi-x"></i>
+                </button>
+                <button type="submit" class="btn btn-success">
+                    Guardar <i class="bi bi-save"></i>
+                </button>
+            </div>
+            </form>
         </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
