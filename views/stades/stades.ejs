@@ -1,0 +1,44 @@
+<%- include ('../includes/head.ejs') %> <%- include ('../includes/nav.ejs' ) %>
+
+  <div class="p-2 row row-cols-1" >
+    <% estados.forEach(function(estados) {%>
+    <form
+      action=""
+      class="form-control bg-dark text-white m-2 col"
+      style="width: 40%"
+    >
+      <div  class="">
+        <div class="container-sm">
+          <div>
+            <label for="id_estado">ID:</label>
+            <input
+              class="form-control"
+              type="text"
+              id="id_estado"
+              name="id_estado"
+              value="<%= estados.id_estado %>"
+              placeholder="id"
+              readonly
+            />
+          </div>
+          <div>
+            <label for="descripcion_estado">Descripcion:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="descripcion_estado"
+              name="descripcion_estado"
+              value="<%=estados.descripcion_estado%>"
+            />
+          </div>
+        </div>
+        <div class="p-2 m-2">
+          <button type="submit" class="btn btn-success">
+            Actualizar <i class="bi bi-save"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    <% }) %>
+  </div>
+

@@ -11,9 +11,12 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 import indexRoutes from "./routes/routes.js";
 import categoriesRoutes from "./routes/categories/categories.js";
+ import StadesRoutes from "./routes/stades/stades.js"
 
 app.use(indexRoutes);
-app.use(categoriesRoutes);  
+app.use(categoriesRoutes);
+ app.use(StadesRoutes)
+
 console.log(join(__dirname, 'public'));
 app.use(express.static(join(__dirname, "public")));
 // app.use(express.static(join(__dirmane, "public")));
