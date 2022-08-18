@@ -3,9 +3,10 @@
   <div class="p-2 row row-cols-1" >
     <% estados.forEach(function(estados) {%>
     <form
-      action=""
+      action="/estados/update/<%=estados.id_estado%>"
       class="form-control bg-dark text-white m-2 col"
       style="width: 40%"
+      method="post"
     >
       <div  class="">
         <div class="container-sm">
@@ -18,7 +19,7 @@
               name="id_estado"
               value="<%= estados.id_estado %>"
               placeholder="id"
-              readonly
+              disabled
             />
           </div>
           <div>

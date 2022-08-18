@@ -115,5 +115,9 @@ router.post("/update/", function (req, res) {
         }
     );
 });
+router.post('/add/tarea/',function (req, res) {
+    let id= req.body.id
+  res.send(id);
+})
 
 export default router;

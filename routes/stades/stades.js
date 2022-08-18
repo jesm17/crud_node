@@ -13,4 +13,17 @@ router.get("/estados", function (req, res) {
   });
 });
 
+router.post('/estados/update/:id',function (req, res) {
+    let id= req.params.id
+
+    let descripcion_estado=req.body.descripcion_estado
+    conection.query(`UPDATE estado SET ? WHERE id_estado = ${id} `,[{descripcion_estado:descripcion_estado}],function (err) {
+        if (err){
+            console.log(err)
+        }else{
+            res.redirect('/estados')
+        }
+    })
+})
+
 export default router;
