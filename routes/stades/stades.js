@@ -7,23 +7,49 @@ router.get("/estados", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-     let estados= rows
-     res.render('stades/stades',{estados: estados});
+      let estados = rows;
+      res.render("stades/stades", { estados: estados });
     }
   });
 });
 
-router.post('/estados/update/:id',function (req, res) {
-    let id= req.params.id
+router.post("/estados/update/:id", function (req, res) {
+  let id = req.params.id;
+  let descripcion_estado = req.body.descripcion_estado;
+  conection.query(
+    `UPDATE estado SET ? WHERE id_estado = ${id} `,
+    [{ descripcion_estado: descripcion_estado }],
+    function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.redirect("/estados");
+      }
+    }
+  );
+});
 
-    let descripcion_estado=req.body.descripcion_estado
-    conection.query(`UPDATE estado SET ? WHERE id_estado = ${id} `,[{descripcion_estado:descripcion_estado}],function (err) {
-        if (err){
-            console.log(err)
-        }else{
-            res.redirect('/estados')
-        }
-    })
-})
+router.get("/estados/delete/:id", function (req, res) {
+  let id = req.params.id;
+  conection.query(`DELETE FROM estado WHERE id_estado = ${id}`, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/estados");
+    }
+  });
+  //res.send(id);
+});
+
+router.post("/add/estado", function (req, res) {
+  conection.query(`INSERT INTO estado set ?`, req.body, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/estados");
+    }
+  });
+  // console.log(req.body);
+});
 
 export default router;

@@ -1,45 +1,101 @@
 <%- include ('../includes/head.ejs') %> <%- include ('../includes/nav.ejs' ) %>
 
-  <div class="p-2 row row-cols-1" >
-    <% estados.forEach(function(estados) {%>
-    <form
-      action="/estados/update/<%=estados.id_estado%>"
-      class="form-control bg-dark text-white m-2 col"
-      style="width: 40%"
-      method="post"
+<div class="p-2 row row-cols-1">
+  <div>
+    <button
+      type="button"
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#addStade"
     >
-      <div  class="">
-        <div class="container-sm">
-          <div>
-            <label for="id_estado">ID:</label>
-            <input
-              class="form-control"
-              type="text"
-              id="id_estado"
-              name="id_estado"
-              value="<%= estados.id_estado %>"
-              placeholder="id"
-              disabled
-            />
-          </div>
-          <div>
-            <label for="descripcion_estado">Descripcion:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="descripcion_estado"
-              name="descripcion_estado"
-              value="<%=estados.descripcion_estado%>"
-            />
-          </div>
+      Agregar estado <i class="bi bi-card-checklist"></i> <i class="bi bi-plus-circle"></i>
+    </button>
+  </div>
+  <% estados.forEach(function(estados) {%>
+  <form
+    action="/estados/update/<%=estados.id_estado%>"
+    class="form-control bg-dark text-white m-2 col"
+    style="width: 40%"
+    method="post"
+  >
+    <div class="">
+      <div class="container-sm">
+        <div>
+          <label for="id_estado">ID:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="id_estado"
+            name="id_estado"
+            value="<%= estados.id_estado %>"
+            placeholder="id"
+            disabled
+          />
         </div>
-        <div class="p-2 m-2">
-          <button type="submit" class="btn btn-success">
-            Actualizar <i class="bi bi-save"></i>
-          </button>
+        <div>
+          <label for="descripcion_estado">Descripcion:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descripcion_estado"
+            name="descripcion_estado"
+            value="<%=estados.descripcion_estado%>"
+          />
         </div>
       </div>
-    </form>
-    <% }) %>
-  </div>
+      <div class="p-2 m-2">
+        <button type="submit" class="btn btn-success">
+          Actualizar <i class="bi bi-save"></i>
+        </button>
+        <a
+          href="estados/delete/<%= estados.id_estado %> "
+          class="btn btn-danger"
+          >Eliminar <i class="bi bi-trash"></i
+        ></a>
+      </div>
+    </div>
+  </form>
+  <% }) %>
+</div>
 
+<div
+  class="modal fade"
+  id="addStade"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Agregar estado</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="/add/estado" method="post" class="form-control">
+          <div>
+            <div>
+              <label for="descripcion_estado" class="form-label">Descripcion</label>
+              <input type="text" class="form-control" id="descripcion_estado" name="descripcion_estado" placeholder="Descripcion de estado">
+            </div>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-success">Guardar <i class="bi bi-save"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Cancelar <i class="bi bi-x-square"></i> 
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

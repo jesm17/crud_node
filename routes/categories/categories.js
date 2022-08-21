@@ -30,7 +30,7 @@ router.post("/categories/update/", function (req, res) {
                 console.log(err);
             } else {
                 console.log("updated successfully");
-                res.redirect('/');
+                res.redirect('/categories');
             }
         }
     );
@@ -43,7 +43,7 @@ router.post('/create/categorie', function (req, res) {
             console.log(err);
         } else {
             res.redirect('/categories')
-            console.log('se creo');
+            //console.log('se creo');
         }
     });
 });
@@ -58,7 +58,7 @@ router.get('/delete/categorie/:id_categoria', function (req, res) {
                 if (err) {
                     console.log(err)
                 } else {
-                    res.redirect('/')
+                    res.redirect('/categories')
 
                 }
             })
