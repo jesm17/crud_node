@@ -1,6 +1,7 @@
 import express from "express";
-
+import dateFormat from "dateformat";
 const router = express.Router();
+
 
 import conection from "../database/conection.js";
 
@@ -38,7 +39,10 @@ router.get("/", function (req, res) {
     }
   });
 });
+
 router.get("/user/:id", function (req, res) {
+  let f1,
+    icon = [];
   const id = req.params.id;
   let id_tarea1 = [];
   let estados;
@@ -51,14 +55,6 @@ router.get("/user/:id", function (req, res) {
         console.log(err);
       }
       usuario = rows;
-      //let fechas = [];
-      /* for (let i = 0; i < usuario.length; i++) {
-                       fechas.push(usuario[i].fecha_inicio);
-
-                       fechas.push(usuario[i].fecha_fin);
-                   }*/
-
-      //console.log(fechas);
     }
   );
   conection.query(
@@ -68,7 +64,11 @@ router.get("/user/:id", function (req, res) {
         console.log(err);
       } else {
         tareas = rows;
-        //console.log(tareas);
+        f1 = [];
+        tareas.forEach((tareas) => {
+          tareas.fecha_fin;
+          f1.push(tareas.fecha_fin);
+        });
       }
     }
   );
@@ -77,60 +77,70 @@ router.get("/user/:id", function (req, res) {
       console.log(err);
     } else {
       estados = rows;
-      //console.log(estados);
-      res.render("tareas", {
+      let fecha_actual = new Date();
+      for (let i = 0; i < f1.length; i++) {
+        if (fecha_actual >= f1[i]) {
+          tareas[i]["color_i"] = "#ff5470";
+        } else {
+          tareas[i]["color_i"] = "#2cb67d";
+        }
+      }
+      for (let j = 0; j < tareas.length; j++) {
+        tareas[j].fecha_fin = dateFormat(tareas[j].fecha_fin, "isoDate");
+        tareas[j].fecha_inicio = dateFormat(tareas[j].fecha_inicio, "isoDate");
+      }
+      res.status(200).render("tareas", {
         usuario: usuario,
         tareas: tareas,
         estados: estados,
+        icon: icon,
       });
+      //console.log(tareas);
     }
   });
 });
 
-router.get("/user/delete/:id", function (req, res) {
-  const id = req.params.id;
+router.post("/user/delete/:id", function (req, res) {
+  const {id} = req.params;
   conection.query(
-    `DELETE FROM tarea WHERE id_usuario_t = ${id} `, function (err) { 
+    `DELETE FROM tarea WHERE id_usuario_t = ${id} `,
+    function (err) {
       if (err) {
+        res.status(404).send('no found')
         console.log(err);
       } else {
-        res.redirect('/'); 
-        conection.query(`delete from usuario where id = ${id}`, function (err,res) {
-          if (err) {
-            console.log(err);
-          } 
-        });
+        res.redirect("/");
+        conection.query(
+          `delete from usuario where id = ${id}`,
+          function (err, res) {
+            if (err) {
+              console.log(err);
+            }
+          }
+        );
       }
-    });
+    }
+  );
 });
 
 router.post("/user/create", function (req, res, next) {
-  const id = req.body.id;
-  const nombre = req.body.nombre;
-  const telefono = req.body.telefono;
-  const correo = req.body.correo;
+  const {id,nombre,telefono,correo,} = req.body;
   const message = "Usuario creado ";
   conection.query(
     "INSERT INTO usuario set ?",
     { id, nombre, telefono, correo },
-    function (err, rows, fields) {
+    function (err, rows) {
       if (err) {
         console.log(err);
-        // NextFunction();
         redirect("/");
       }
-      res.redirect("/");
+      res.redirect(`/user/${id}`);
     }
   );
 });
 
 router.post("/update/", function (req, res) {
-  //console.log(req.body)
-  let id = req.body.id;
-  let nombre = req.body.nombre;
-  let telefono = req.body.telefono;
-  let correo = req.body.correo;
-
+  let {id,nombre,telefono,correo} = req.body;
   conection.query(
     `update usuario set ? where id = ${id}`,
     { nombre, telefono, correo },
@@ -138,23 +148,23 @@ router.post("/update/", function (req, res) {
       if (err) {
         console.log(err);
       }
-      res.redirect("/");
+      res.redirect(`/user/${id}`);
     }
   );
 });
+
 router.post("/add/tarea/", function (req, res) {
   conection.query("INSERT INTO tarea set ? ", req.body, function (err, result) {
     if (err) {
       console.log(err);
     } else {
-      console.log("inserted ¡");
       res.redirect("/");
     }
   });
 });
-router.post("/tarea/update/:id", function (req, res) {
-  let id = req.params.id;
-  //
+
+router.post("/tarea/update/:id/:id_user", function (req, res) {
+  let {id, id_user} = req.params;
   conection.query(
     `update tarea set ? WHERE id_tarea = ${id}`,
     req.body,
@@ -162,10 +172,23 @@ router.post("/tarea/update/:id", function (req, res) {
       if (err) {
         console.log(err);
       } else {
-        res.redirect(`/`);
+        res.redirect(`/user/${id_user}`);
+        console.log('updated');
       }
     }
   );
+});
+
+router.get('/tarea/delete/:id/:user_id', function (req, res) {
+  let {id,user_id} = req.params;
+  conection.query(`DELETE FROM tarea WHERE id_tarea = ${id}`, function (err, res) {
+    if (err) {
+      console.log(err);
+    }else {
+      console.log('delete completed successfully');
+    }
+  })
+  res.redirect(`/user/${user_id}`); 
 });
 
 export default router;

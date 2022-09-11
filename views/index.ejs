@@ -171,7 +171,8 @@
                 <select
                   id="id_usuario_t" name="id_usuario_t"
                   class="form-select"
-                  required
+                  required 
+                  multiple
                 >
                   <option disabled selected>Seleccione un usuario</option>
                   <% usuarios.forEach(function(usuario) { %>
@@ -183,7 +184,7 @@
               </div>
               <div>
                 <label for="id_estado_t" class="form-label">Estado</label>
-                <select name="id_estado_t" id="id_estado_t" class="form-select">
+                <select name="id_estado_t" id="id_estado_t" class="form-select" required multiple>
                     <option disabled selected>Seleccione el estado</option>
                     <% estados.forEach(function(estado) { %>
                         <option value="<%= estado.id_estado %>"><%= estado.descripcion_estado %> </option>
@@ -192,7 +193,7 @@
               </div>
               <div>
                 <label for="id_categoria_t" class="form-label">Categoria</label>
-                <select name="id_categoria_t" id="id_categoria_t" class="form-select">
+                <select name="id_categoria_t" id="id_categoria_t" class="form-select" required multiple>
                     <option disabled selected>Seleccione una categoria</option>
                     <% categorias.forEach(function(categoria) { %>
                         <option value="<%= categoria.id_categoria %>"><%= categoria.nombre_categoria %> </option>
@@ -201,32 +202,31 @@
               </div>
               <div>
                 <label for="descripcion_tarea" class="form-label">Descripcion de la tarea</label>
-                <input type="text" class="form-control" min="3" name="descripcion_tarea" id="descripciondescripcion_tarea" placeholder="Descripcion de la tarea">
+                <input type="text" class="form-control" min="3" name="descripcion_tarea" id="descripciondescripcion_tarea" placeholder="Descripcion de la tarea" required>
               </div>
               <div>
                 <label for="fecha_inicio" class="form-label">Fecha de inicio</label>
-                <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" placeholder="Fecha de inicio">
+                <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" placeholder="Fecha de inicio" required>
               </div>
 
               <div>
                 <label for="fecha_fin" class="form-label">Fecha fin</label>
-                <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" placeholder="Fecha de fin">
+                <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" placeholder="Fecha de fin" required>
               </div>
             </div>
-            <div class="p-2">
-              <button type="submit" class="btn btn-success">
-                <i class="bi bi-check-all"></i> Asignar
-              </button>
-            </div>
-
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-            <i class="bi bi-x-square"></i>
-            Cerrar
-          </button>
-        </div>
+            
+            
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-check-all"></i> Asignar
+            </button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+              <i class="bi bi-x-square"></i>
+              Cerrar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

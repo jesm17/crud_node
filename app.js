@@ -1,26 +1,33 @@
 import express from "express";
-import {join, dirname} from "path";
-import {fileURLToPath} from "url";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+const router = express.Router();
 
 const app = express();
-const __dirname = dirname(fileURLToPath(import.meta.url))
-
 const port = 3000;
-app.set("view engine", "ejs");
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 import indexRoutes from "./routes/routes.js";
 import categoriesRoutes from "./routes/categories/categories.js";
- import StadesRoutes from "./routes/stades/stades.js"
+import StadesRoutes from "./routes/stades/stades.js";
+import { log } from "console";
 
+app.set("view engine", "ejs");
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(indexRoutes);
 app.use(categoriesRoutes);
- app.use(StadesRoutes)
+app.use(StadesRoutes);
 
-console.log(join(__dirname, 'public'));
+console.log(join(__dirname, "public"));
 app.use(express.static(join(__dirname, "public")));
-// app.use(express.static(join(__dirmane, "public")));
+
+app.use((req, res)=> { 
+  res.status(200).sendFile(__dirname+ "/public/images/404.svg"); 
+  
+});
 
 app.listen(port, function () {
-    console.log("Server running at http://localhost:" + port);
+  console.log("Server running at http://localhost:" + port); 
 });

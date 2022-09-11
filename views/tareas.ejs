@@ -1,4 +1,5 @@
 <%- include('includes/head'); %> <%- include('includes/nav'); %>
+
 <div class="d-flex justify-content-center p-2 m-2">
   <form action="/update/" method="post" class="form-control" style="width: 60%">
     <div>
@@ -20,7 +21,7 @@
                   readonly
                 />
               </div>
-              <div>
+              <div id="nombre_q">
                 <label for="nombre" class="form-label"> Nombre: </label>
                 <input
                   type="text"
@@ -55,7 +56,7 @@
         </div>
         <div class="d-flex justify-content-center">
           <button type="submit" class="btn btn-success m-2">
-            Guardar <i class="bi bi-save"></i>
+            Actualizar <i class="bi bi-save"></i>
           </button>
         </div>
       </div>
@@ -65,7 +66,8 @@
 <div class="container">
   <div class="d-flex justify">
     <% tareas.forEach(function(tareas) { %>
-    <form action="/tarea/update/<%= tareas.id_tarea  %> " method="post">
+
+    <form action="/tarea/update/<%= tareas.id_tarea  %>/<%= usuario[0].id %> " method="post">
       <div class="d-flex align-items-start">
         <div>
           <div class="container d-flex align-items-start">
@@ -108,6 +110,7 @@
                     disabled
                   />
                 </div>
+                <div><%= icon.bg %></div>
                 <div>
                   <label for="id_estado_t" class="form-label">
                     Estado tarea :</label
@@ -124,8 +127,45 @@
                     <% }) %>
                   </select>
                 </div>
+                <div>
+                  <label for="fecha_inicio" class="form-label"
+                    >Fecha de inicio</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="Fecha de inicio"
+                    id="fecha_inicio"
+                    name="fecha_inicio"
+                    value="<%= tareas.fecha_inicio %>"
+                  />
+                </div>
+                <div>
+                  <label for="fecha_fin" class="form-label"
+                    >Fecha de fin
+                    <i
+                      class="bi bi-bell"
+                      style="color: <%= tareas.color_i %>"
+                    ></i
+                  ></label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="Fecha de fin"
+                    id="fecha_fin"
+                    name="fecha_fin"
+                    value="<%= tareas.fecha_fin %>"
+                  />
+                </div>
                 <div class="d-flex justify-content-center p-4 m-2">
-                  <button class="btn btn-success">Actualizar tarea</button>
+                  <button class="btn btn-success p-2 m-2">
+                    Actualizar tarea <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+                  <a
+                    href="/tarea/delete/<%=tareas.id_tarea  %>/<%= usuario[0].id%>  "
+                    class="btn btn-danger p-2 m-2"
+                    >Eliminar tarea <i class="bi bi-trash"></i
+                  ></a>
                 </div>
               </div>
             </div>

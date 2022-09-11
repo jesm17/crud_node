@@ -14,8 +14,8 @@ router.get("/estados", function (req, res) {
 });
 
 router.post("/estados/update/:id", function (req, res) {
-  let id = req.params.id;
-  let descripcion_estado = req.body.descripcion_estado;
+  let { id } = req.params;
+  let { descripcion_estado } = req.body;
   conection.query(
     `UPDATE estado SET ? WHERE id_estado = ${id} `,
     [{ descripcion_estado: descripcion_estado }],
@@ -38,7 +38,6 @@ router.get("/estados/delete/:id", function (req, res) {
       res.redirect("/estados");
     }
   });
-  //res.send(id);
 });
 
 router.post("/add/estado", function (req, res) {
@@ -49,7 +48,6 @@ router.post("/add/estado", function (req, res) {
       res.redirect("/estados");
     }
   });
-  // console.log(req.body);
 });
 
 export default router;
